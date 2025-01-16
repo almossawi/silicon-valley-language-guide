@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Silicon Valley Language Guide / Playing Cards</title>
+  <link rel="icon" type="image/png" href="images/alien.png">
+
+  <!-- SEO & Social Media Meta Tags -->
+  <meta name="description" content="A guide for outsiders. Tap, flip, and share!" />
+  <!-- Open Graph / Facebook -->
+  <meta property="og:title" content="Silicon Valley Language Guide" />
+  <meta property="og:description" content="A guide to Silicon Valley vernacular through 100 playing cards. Tap, flip, and share!" />
+  <meta property="og:image" content="https://almossawi.com/silicon-valley-language-guide/images/preview2.png" />
+  <meta property="og:url" content="https://almossawi.com/silicon-valley-language-guide" />
+  <meta property="og:type" content="website" />
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Silicon Valley Language Guide" />
+  <meta name="twitter:description" content="A guide to Silicon Valley vernacular through 100 playing cards. Tap, flip, and share!" />
+  <meta name="twitter:image" content="https://almossawi.com/silicon-valley-language-guide/images/preview2.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  <style>
+    /* Basic Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: Poppins, Arial, sans-serif;
+      background-color: #f5f5f5;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 1rem;
+    }
+    .cardLabel {
+      font-size: 24px;
+      font-weight: 600;
+    }
+    /* Carousel Container */
+    .carousel-container {
+      position: relative;
+      width: 100%;
+      max-width: 800px;
+      aspect-ratio: 16 / 11;
+      overflow: hidden;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+    }
+    .pulse {
+      animation: pulse 1.5s infinite;
+    }
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.2); }
+      70% { box-shadow: 0 0 0 10px rgba(0, 0, 0, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(0, 0, 0, 0); }
+    }
+    /* Speech Bubble */
+    .speech-bubble {
+      position: absolute;
+      bottom: 26px;
+      left: 40px;
+      background-color: #fff;
+      border: 2px solid #ccc;
+      border-radius: 12px;
+      padding: 10px 15px;
+      box-shadow: -4px 4px 0 0 rgba(0, 0, 0, 0.7);
+      display: flex;
+      align-items: center;
+      max-width: 150px;
+      height: 190px;
+      z-index: 20;
+      transform: scale(0);
+      transition: transform 0.3s ease-out;
+    }
+    .speech-bubble.show {
+      transform: scale(1);
+    }
+    .speech-bubble p {
+      margin: 35px 5px;
+      font-size: 14px;
+      color: #333;
+    }
+    .close-btn {
+      background: none;
+      border: none;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      color: #000;
+      position: absolute;
+      top: 5px;
+      right: 10px;
+      line-height: 1;
+    }
+    #kickstarterBtn {
+      display: inline-block;
+      padding: 0.6rem 1.2rem;
+      font-size: 1rem;
+      color: #fff;
+      background-color: #ca3d3d;
+      border: 2px solid #000;
+      border-radius: 12px;
+      box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.7);
+      text-decoration: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      margin-top: 20px;
+      margin-bottom: 35px;
+    }
+    #kickstarterBtn:hover {
+      transform: translateY(-6px);
+    }
+    /* Carousel Inner Container */
+    .carousel {
+      display: flex;
+      transition: transform 0.5s ease;
+      height: 100%;
+    }
+    /* Each card */
+    .card {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      flex-shrink: 0;
+      transform-style: preserve-3d;
+      transition: transform 0.6s ease;
+      cursor: pointer;
+    }
+    .card.flipped {
+      transform: rotateY(180deg);
+    }
+    /* Images */
+    .card img {
+      background-color: #fff;
+      position: absolute;
+      height: 90%;
+      top: 5%;
+      left: 27.5%;
+      object-fit: contain;
+      display: block;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+      backface-visibility: hidden;
+    }
+    .card .front {
+      transform: rotateY(180deg);
+    }
+    .card .back {
+      transform: rotateY(0deg);
+    }
+    /* Arrows */
+    .arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex; /* Flexbox for centering */
+      justify-content: center;
+      align-items: center;
+      background-color: rgba(0, 0, 0, 0.5);
+      border: none;
+      color: #fff;
+      font-size: 2rem;
+      width: 48px;
+      height: 48px;
+      cursor: pointer;
+      border-radius: 50%;
+      z-index: 10;
+      outline: none;
+      transition: background-color 0.3s ease;
+    }
+    .arrow::before {
+      content: attr(data-arrow); /* Use data attribute for the chevron */
+      font-family: Arial, sans-serif;
+      font-weight: bold;
+      display: block;
+    }
+    .arrow:hover {
+      background-color: rgba(0, 0, 0, 0.8);
+    }
+    .left-arrow {
+      left: 10px;
+      padding-right: 2px;
+    }
+    .right-arrow {
+      right: 10px;
+      padding-left: 2px;
+    }
+    /* Info Container */
+    .info-container {
+      width: 100%;
+      max-width: 800px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 0.5rem;
+      font-size: 1.2rem;
+      padding: 0 0.5rem;
+    }
+    /* Copy Button */
+    #copyBtn {
+      padding: 0.6rem 1.2rem;
+      font-size: 1rem;
+      color: #fff;
+      background-color: #ca3d3d;
+      border: 2px solid #000;
+      border-radius: 12px;
+      box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.7);
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    #copyBtn:hover {
+      transform: translateY(-6px);
+    }
+    /* Footer */
+    .footer {
+      width: 100%;
+      max-width: 800px;
+      margin-top: 6rem;
+      padding: 1rem 0;
+      text-align: center;
+      border-top: 1px solid #ccc;
+    }
+    .footer-logo {
+      width: 100%;
+      max-width: 800px;
+      margin-bottom: 0.5rem;
+    }
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 0.5rem;
+    }
+    .footer p {
+      margin: 2px 0 15px;
+      font-size: 18px;
+    }
+    .footer h3 {
+      font-size: 25px;
+      margin-bottom: 7px;
+      line-height: 36px;
+    }
+    h1 {
+      font-family: "Pixelify Sans", Poppins;
+      font-size: 50px;
+      font-weight: 300;
+      padding: 30px 0;
+      text-align: center;
+      line-height: 46px;
+    }
+    a {
+      color: #3b3b3b;
+      text-decoration: none;
+    }
+    a:hover {
+      color: #3b3b3b;
+      text-decoration: underline;
+    }
+    @media (max-width: 800px) {
+      .speech-bubble {
+        display: none;
+      }
+    }
+    /* Mobile adjustments */
+    @media (max-width: 600px) {
+      .carousel-container {
+        max-width: 100%;
+      }
+      .arrow {
+        font-size: 1.5rem;
+        width: 36px;
+        height: 36px;
+        line-height: 36px;
+      }
+      .speech-bubble {
+        bottom: 10px;
+        left: 10px;
+        max-width: 200px;
+        padding: 8px 12px;
+      }
+      .speech-bubble p {
+        font-size: 12px;
+      }
+      #copyBtn {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+      }
+      .footer-links a {
+        font-size: 0.9rem;
+      }
+      h1 {
+        font-size: 43px;
+        line-height: 41px;
+      }
+    }
+  </style>
+  <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-35624223-1']);
+      _gaq.push(['_trackPageview']);
+    
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+    
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MHW8LHHC23"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-MHW8LHHC23');
+    </script>
+</head>
+<body>
+  <h1>Silicon Valley Language Guide</h1>
+  <div class="carousel-container">
+    <button class="arrow left-arrow" data-arrow="&#10094;" id="prevBtn"></button>
+    <div class="carousel" id="carousel">
+      <!-- Cards will be dynamically inserted here -->
+    </div>
+    <button class="arrow right-arrow" data-arrow="&#10095;" id="nextBtn"></button>
+  
+    <!-- Speech Bubble -->
+    <div class="speech-bubble pulse" id="speechBubble">
+      <button class="close-btn" id="closeSpeechBubble" aria-label="Close">&times;</button>
+      <p>Tap or click the card to flip it. Use your keyboard or the arrows to navigate.</p>
+    </div>
+  </div>
+  
+  <!-- Info Container -->
+  <div class="info-container">
+    <div id="cardNumber" class="cardLabel"># 1</div>
+    <button id="copyBtn">Copy a Shareable Link</button>
+  </div>
+  
+  <!-- Footer -->
+  <footer class="footer">
+    <h3>Interested in a physical version of these cards?</h3>
+    <!-- Kickstarter Link -->
+    <a id="kickstarterBtn" href="https://www.kickstarter.com/projects/almossawi/can-i-pick-your-brain-real-quick-card-game" target="_blank" rel="noopener noreferrer">
+      Follow the Kickstarter
+    </a>
+    <a href="https://www.kickstarter.com/projects/almossawi/can-i-pick-your-brain-real-quick-card-game">
+      <img src="images/card-game-kickstarter2.jpg" alt="Interested in a physical version of these cards?" class="footer-logo">
+    </a>
+    <br /><br />
+    <p style="color: #858585">
+      A favorite one missing? <a href="https://github.com/almossawi/silicon-valley-language-guide">Reach out on GitHub</a>
+    </p>
+    <p style="font-size:95%;color: #858585">2025 / ali@almossawi.com / <a href="https://almossawi.substack.com">My writing</a> / <a href="https://www.linkedin.com/in/almossawi/">LinkedIn</a></p>
+    <br />
+    <a href="https://creativecommons.org/licenses/by-nc/4.0/deed.en">
+      <img src="images/cc-by-nc.svg" alt="Creative Commons License">
+    </a>
+  </footer>
+  
+  <script>
+    // Total number of cards and back image
+    const totalCards = 100;
+    const cardBack = 'cards/card_back.png';
+    
+    const carousel = document.getElementById('carousel');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const copyBtn = document.getElementById('copyBtn');
+    const cardNumberElem = document.getElementById('cardNumber');
+    const speechBubble = document.getElementById('speechBubble');
+    const closeSpeechBubble = document.getElementById('closeSpeechBubble');
+    
+    // Create cards dynamically.
+    for (let i = 1; i <= totalCards; i++) {
+      const card = document.createElement('div');
+      card.className = 'card';
+      
+      // Toggle flip on click
+      card.addEventListener('click', () => {
+        card.classList.toggle('flipped');
+      });
+      
+      // Back image
+      const backImg = document.createElement('img');
+      backImg.src = cardBack;
+      backImg.alt = 'Card Back';
+      backImg.className = 'back';
+      card.appendChild(backImg);
+      
+      // Front image
+      const frontImg = document.createElement('img');
+      frontImg.src = `cards/card${i}.png`;
+      frontImg.alt = `# ${i}`;
+      frontImg.className = 'front';
+      card.appendChild(frontImg);
+      
+      carousel.appendChild(card);
+    }
+    
+    let currentIndex = 0;
+    const cards = document.querySelectorAll('.card');
+    
+    // Update arrows visibility
+    function updateArrows() {
+      prevBtn.style.display = currentIndex === 0 ? 'none' : 'block';
+      nextBtn.style.display = currentIndex === totalCards - 1 ? 'none' : 'block';
+    }
+    
+    // Update URL hash
+    function updateHash() {
+      window.location.hash = 'card' + (currentIndex + 1);
+    }
+    
+    // Update card number display
+    function updateCardNumber() {
+      cardNumberElem.textContent = "# " + (currentIndex + 1) + " of 100";
+    }
+    
+    // Determine if we are zoomed in.
+    function isZoomedIn() {
+      // Use visualViewport if available.
+      return window.visualViewport ? (window.visualViewport.scale !== 1) : false;
+    }
+    
+    // Update the carousel and flip the card.
+    function updateCarousel() {
+      carousel.style.transform = `translateX(-${currentIndex * 100}%)`;
+      
+      // If mobile (600px or less) and zoomed in, or otherwise, disable flip animation.
+      if (window.innerWidth <= 600 && isZoomedIn()) {
+        // Immediately toggle the card without animation.
+        cards[currentIndex].classList.add('flipped');
+      } else if (window.innerWidth <= 600) {
+        // Mobile and not zoomed: immediately flip using a no-transition technique.
+        cards[currentIndex].classList.add('flipped');
+      } else {
+        // For larger viewports, use the delayed flip.
+        if (!cards[currentIndex].classList.contains('flipped')) {
+          setTimeout(() => {
+            cards[currentIndex].classList.add('flipped');
+          }, 400);
+        }
+      }
+      
+      updateArrows();
+      updateHash();
+      updateCardNumber();
+    }
+    
+    // Arrow button event listeners.
+    nextBtn.addEventListener('click', () => {
+      if (currentIndex < totalCards - 1) {
+        currentIndex++;
+        updateCarousel();
+      }
+    });
+    prevBtn.addEventListener('click', () => {
+      if (currentIndex > 0) {
+        currentIndex--;
+        updateCarousel();
+      }
+    });
+    
+    // Arrow key navigation.
+    document.addEventListener('keydown', (event) => {
+      if (event.key === "ArrowRight" && currentIndex < totalCards - 1) {
+        currentIndex++;
+        updateCarousel();
+      } else if (event.key === "ArrowLeft" && currentIndex > 0) {
+        currentIndex--;
+        updateCarousel();
+      }
+    });
+    
+    // Swipe functionality.
+    let startX = 0, endX = 0;
+    carousel.addEventListener('touchstart', (e) => { startX = e.touches[0].clientX; });
+    carousel.addEventListener('touchend', (e) => {
+      endX = e.changedTouches[0].clientX;
+      const swipeThreshold = 50;
+      if (startX - endX > swipeThreshold && currentIndex < totalCards - 1) {
+        currentIndex++;
+        updateCarousel();
+      } else if (endX - startX > swipeThreshold && currentIndex > 0) {
+        currentIndex--;
+        updateCarousel();
+      }
+    });
+    
+    // Copy URL functionality.
+    copyBtn.addEventListener('click', () => {
+      const shareUrl = window.location.href;
+      navigator.clipboard.writeText(shareUrl).then(() => {
+        copyBtn.textContent = "Copied!";
+        setTimeout(() => { copyBtn.textContent = "Copy a Shareable Link"; }, 2000);
+      }).catch(err => {
+        console.error("Failed to copy URL: ", err);
+      });
+    });
+    
+    // Close speech bubble.
+    closeSpeechBubble.addEventListener('click', () => {
+      speechBubble.style.display = 'none';
+    });
+    
+    // On page load.
+    window.addEventListener('load', () => {
+      const hash = window.location.hash;
+      if (hash && hash.startsWith('#card')) {
+        const cardNumber = parseInt(hash.replace('#card', ''), 10);
+        if (!isNaN(cardNumber) && cardNumber >= 1 && cardNumber <= totalCards) {
+          currentIndex = cardNumber - 1;
+        }
+      }
+      carousel.style.transform = `translateX(-${currentIndex * 100}%)`;
+      
+      // For mobile: if zoomed, toggle immediately; otherwise, use immediate flip.
+      if (window.innerWidth <= 600) {
+        cards[currentIndex].classList.add('flipped');
+      } else {
+        setTimeout(() => { cards[currentIndex].classList.add('flipped'); }, 600);
+      }
+      
+      updateArrows();
+      updateHash();
+      updateCardNumber();
+      
+      // Show the speech bubble after a delay.
+      setTimeout(() => {
+        speechBubble.classList.add('show');
+      }, 1500);
+    });
+  </script>
+</body>
+</html>
